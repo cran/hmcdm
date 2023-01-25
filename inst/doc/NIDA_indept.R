@@ -8,21 +8,18 @@ knitr::opts_chunk$set(
 library(hmcdm)
 
 ## -----------------------------------------------------------------------------
-N = length(Test_versions)
+N = dim(Design_array)[1]
 J = nrow(Q_matrix)
 K = ncol(Q_matrix)
-L = nrow(Test_order)
-Jt = J/L
+L = dim(Design_array)[3]
 
 ## -----------------------------------------------------------------------------
-Test_versions_sim <- sample(1:5,N,replace = L)
-nClass = 2^K
-R <- matrix(0,K,K)
 tau <- numeric(K)
 for(k in 1:K){
   tau[k] <- runif(1,.2,.6)
 }
-# Initial Alphas
+R = matrix(0,K,K)
+# Initial alphas
 p_mastery <- c(.5,.5,.4,.4)
 Alphas_0 <- matrix(0,N,K)
 for(i in 1:N){
@@ -36,21 +33,17 @@ for(i in 1:N){
     }
   }
 }
-# Subsequent Alphas
-Alphas <- simulate_alphas_indept(tau,Alphas_0,L,R)
+Alphas <- sim_alphas(model="indept",taus=tau,N=N,L=L,R=R,alpha0=Alphas_0)
 table(rowSums(Alphas[,,5]) - rowSums(Alphas[,,1])) # used to see how much transition has taken place
-Gmats <- array(NA,c(Jt,K,L))
-Smats <- array(NA,c(Jt,K,L))
-for(k in 1:K){
-  Smats[,k,] <- runif(1,.1,.3)
-  Gmats[,k,] <- runif(1,.1,.3)
-}
+Svec <- runif(K,.1,.3)
+Gvec <- runif(K,.1,.3)
 
-Y_sim = simNIDA(Alphas,Smats[1,,1],Gmats[1,,1],Q_matrix,Test_order,Test_versions_sim)
+Y_sim <- sim_hmcdm(model="NIDA",Alphas,Q_matrix,Design_array,
+                   Svec=Svec,Gvec=Gvec)
 
 ## -----------------------------------------------------------------------------
-output_NIDA_indept = hmcdm(Y_sim,Q_matrix,"NIDA_indept",Test_order,Test_versions_sim,100,30,
-                                    R = R)
+output_NIDA_indept = hmcdm(Y_sim, Q_matrix, "NIDA_indept", Design_array,
+                           100, 30, R = R)
 output_NIDA_indept
 summary(output_NIDA_indept)
 a <- summary(output_NIDA_indept)

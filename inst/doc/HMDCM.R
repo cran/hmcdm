@@ -8,29 +8,37 @@ knitr::opts_chunk$set(
 library(hmcdm)
 
 ## -----------------------------------------------------------------------------
-N = length(Test_versions)
+N = dim(Design_array)[1]
 J = nrow(Q_matrix)
 K = ncol(Q_matrix)
-L = nrow(Test_order)
-Jt = J/L
+L = dim(Design_array)[3]
+
 
 ## -----------------------------------------------------------------------------
-Q_examinee <- Q_list(Q_matrix, Test_order, Test_versions)
 class_0 <- sample(1:2^K, N, replace = L)
 Alphas_0 <- matrix(0,N,K)
-thetas_true = rnorm(N)
 for(i in 1:N){
-  Alphas_0[i,] <- inv_bijectionvector(K,(class_0[i]-1))
+ Alphas_0[i,] <- inv_bijectionvector(K,(class_0[i]-1))
 }
+thetas_true = rnorm(N)
 lambdas_true = c(-1, 1.8, .277, .055)
-Alphas <- simulate_alphas_HO_sep(lambdas_true,thetas_true,Alphas_0,Q_examinee,L,Jt)
+Alphas <- sim_alphas(model="HO_sep", 
+                    lambdas=lambdas_true, 
+                    thetas=thetas_true, 
+                    Q_matrix=Q_matrix, 
+                    Design_array=Design_array)
 table(rowSums(Alphas[,,5]) - rowSums(Alphas[,,1])) # used to see how much transition has taken place
-itempars_true <- array(runif(Jt*2*L,.1,.2), dim = c(Jt,2,L))
-ETAs <- ETAmat(K, J, Q_matrix)
-Y_sim <- simDINA(Alphas,itempars_true,ETAs,Test_order,Test_versions)
+itempars_true <- matrix(runif(J*2,.1,.2), ncol=2)
+
+Y_sim <- sim_hmcdm(model="DINA",Alphas,Q_matrix,Design_array,
+                   itempars=itempars_true)
 
 ## -----------------------------------------------------------------------------
-output_HMDCM = hmcdm(Y_sim,Q_matrix,"DINA_HO",Test_order,Test_versions,
+output_HMDCM = hmcdm(Y_sim,Q_matrix,"DINA_HO",Test_order = Test_order, Test_versions = Test_versions,
+                     chain_length=100,burn_in=30,
+                     theta_propose = 2,deltas_propose = c(.45,.35,.25,.06))
+
+output_HMDCM = hmcdm(Y_sim,Q_matrix,"DINA_HO",Design_array,
                      chain_length=100,burn_in=30,
                      theta_propose = 2,deltas_propose = c(.45,.35,.25,.06))
 
@@ -40,9 +48,6 @@ summary(output_HMDCM)
 a <- summary(output_HMDCM)
 a$ss_EAP
 a$lambdas_EAP
-a$PPP_total_scores
-a$PPP_item_means
-a$PPP_item_ORs
 mean(a$PPP_total_scores)
 mean(upper.tri(a$PPP_item_ORs))
 mean(a$PPP_item_means)
@@ -74,4 +79,20 @@ pp_check(output_HMDCM, plotfun="hist", type="item_OR")
 pp_check(output_HMDCM, plotfun="stat_2d", type="item_mean")
 pp_check(output_HMDCM, plotfun="scatter_avg", type="total_score")
 pp_check(output_HMDCM, plotfun="error_scatter_avg", type="total_score")
+
+## -----------------------------------------------------------------------------
+# output_HMDCM1 = hmcdm(Y_sim, Q_matrix, "DINA_HO", Design_array,
+#                      chain_length=100, burn_in=30,
+#                      theta_propose = 2, deltas_propose = c(.45,.35,.25,.06))
+# output_HMDCM2 = hmcdm(Y_sim, Q_matrix, "DINA_HO", Design_array,
+#                      chain_length=100, burn_in=30,
+#                      theta_propose = 2, deltas_propose = c(.45,.35,.25,.06))
+# 
+# library(coda)
+# 
+# x <- mcmc.list(mcmc(t(rbind(output_HMDCM1$ss, output_HMDCM1$gs, output_HMDCM1$lambdas))),
+#                mcmc(t(rbind(output_HMDCM2$ss, output_HMDCM2$gs, output_HMDCM2$lambdas))))
+# 
+# gelman.diag(x, autoburnin=F)
+
 

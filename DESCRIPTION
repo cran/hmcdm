@@ -1,7 +1,7 @@
 Package: hmcdm
 Type: Package
 Title: Hidden Markov Cognitive Diagnosis Models for Learning
-Version: 2.0.0
+Version: 2.1.0
 Authors@R: c(
      person("Susu", "Zhang", email = "szhan105@illinois.edu", role = c("aut")),
      person("Shiyu", "Wang", email = "swang44@uga.edu", role = c("aut")),
@@ -26,15 +26,15 @@ LinkingTo: Rcpp, RcppArmadillo, progress
 SystemRequirements: C++11
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Packaged: 2022-08-27 15:21:42 UTC; sunbeomkwon
+Packaged: 2023-01-25 20:48:54 UTC; sunbeomkwon
 Author: Susu Zhang [aut],
   Shiyu Wang [aut],
   Yinghan Chen [aut],
   Sunbeom Kwon [aut, cre]
 Maintainer: Sunbeom Kwon <sunbeom2@illinois.edu>
 Repository: CRAN
-Date/Publication: 2022-08-29 09:20:08 UTC
+Date/Publication: 2023-01-25 21:20:05 UTC

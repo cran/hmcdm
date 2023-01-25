@@ -1,3 +1,9 @@
+# hmcdm 2.1.0
+
+- Release of `hmcdm` package version 2.1.0.
+
+- Allows sparse response arrays and design arrays with missing values.
+
 # hmcdm 2.0.0
 
 - Release of `hmcdm` package version 2.0.0.
