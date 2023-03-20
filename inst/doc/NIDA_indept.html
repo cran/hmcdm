@@ -374,7 +374,7 @@ model</h2>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">rowSums</span>(Alphas[,,<span class="dv">5</span>]) <span class="sc">-</span> <span class="fu">rowSums</span>(Alphas[,,<span class="dv">1</span>])) <span class="co"># used to see how much transition has taken place</span></span>
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   0   1   2   3   4 </span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  26 119 124  69  12</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  35 107 126  68  14</span></span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>Svec <span class="ot">&lt;-</span> <span class="fu">runif</span>(K,.<span class="dv">1</span>,.<span class="dv">3</span>)</span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>Gvec <span class="ot">&lt;-</span> <span class="fu">runif</span>(K,.<span class="dv">1</span>,.<span class="dv">3</span>)</span>
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
@@ -402,40 +402,40 @@ distribution</h2>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Item Parameters:</span></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ss_EAP gs_EAP</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.1544 0.2124</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.1527 0.2716</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.2336 0.2351</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.1842 0.1802</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.1819 0.2478</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.2579 0.2439</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.1818 0.1654</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.2220 0.2238</span></span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Transition Parameters:</span></span>
 <span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    taus_EAP</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; τ1   0.4969</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; τ2   0.3157</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; τ3   0.2717</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; τ4   0.4502</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; τ1   0.3727</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; τ2   0.4323</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; τ3   0.2930</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; τ4   0.3812</span></span>
 <span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Class Probabilities:</span></span>
 <span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      pis_EAP</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0000 0.06531</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0001 0.02429</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0010 0.13878</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0011 0.02071</span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0100 0.08161</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0000 0.12792</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0001 0.04752</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0010 0.06378</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0011 0.06141</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0100 0.07061</span></span>
 <span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    ... 11 more classes</span></span>
 <span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Deviance Information Criterion (DIC): 22472.21 </span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Deviance Information Criterion (DIC): 23555.74 </span></span>
 <span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Posterior Predictive P-value (PPP):</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1: 0.4908</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1: 0.4924</span></span>
 <span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2:  0.49</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total scores:  0.6054</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total scores:  0.6036</span></span>
 <span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">summary</span>(output_NIDA_indept)</span>
 <span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(a<span class="sc">$</span>ss_EAP)</span>
 <span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           [,1]</span></span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,] 0.1543751</span></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,] 0.1527295</span></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] 0.2335961</span></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,] 0.1841662</span></span></code></pre></div>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,] 0.1819058</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,] 0.2578910</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] 0.1817671</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,] 0.2220104</span></span></code></pre></div>
 </div>
 <div id="check-for-parameter-estimation-accuracy" class="section level2">
 <h2>(3) Check for parameter estimation accuracy</h2>
@@ -444,61 +444,61 @@ distribution</h2>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  AAR_vec[t] <span class="ot">&lt;-</span> <span class="fu">mean</span>(Alphas[,,t]<span class="sc">==</span>a<span class="sc">$</span>Alphas_est[,,t])</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>AAR_vec</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.8678571 0.8914286 0.9400000 0.9614286 0.9728571</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.8728571 0.8971429 0.9292857 0.9621429 0.9678571</span></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>PAR_vec <span class="ot">&lt;-</span> <span class="fu">numeric</span>(L)</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>L){</span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  PAR_vec[t] <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">rowSums</span>((Alphas[,,t]<span class="sc">-</span>a<span class="sc">$</span>Alphas_est[,,t])<span class="sc">^</span><span class="dv">2</span>)<span class="sc">==</span><span class="dv">0</span>)</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>PAR_vec</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.5742857 0.6342857 0.7914286 0.8628571 0.8942857</span></span></code></pre></div>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.5914286 0.6485714 0.7314286 0.8628571 0.8800000</span></span></code></pre></div>
 </div>
 <div id="evaluate-the-fit-of-the-model-to-the-observed-response" class="section level2">
 <h2>(4) Evaluate the fit of the model to the observed response</h2>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span>DIC</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              Transition Response_Time Response    Joint    Total</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D_bar          2060.161            NA 17897.09 1838.244 21795.49</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D(theta_bar)   1965.087            NA 17332.90 1820.789 21118.77</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; DIC            2155.234            NA 18461.28 1855.699 22472.21</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D_bar          2270.643            NA 18680.39 1866.094 22817.13</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D(theta_bar)   2165.676            NA 18052.03 1860.802 22078.51</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; DIC            2375.610            NA 19308.74 1871.385 23555.74</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(a<span class="sc">$</span>PPP_total_scores)</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5]</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,] 0.02 0.02 0.00 0.70 0.98</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,] 0.46 0.22 0.46 0.82 1.00</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] 0.76 0.84 0.72 0.12 0.38</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,] 0.44 0.54 0.68 0.82 0.72</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,] 0.16 0.26 0.74 0.40 0.76</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6,] 0.94 0.66 0.22 0.72 0.74</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,] 0.94 0.74 0.90 0.74 0.42</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,] 0.68 0.52 0.48 0.38 0.18</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] 1.00 0.56 0.52 0.50 0.34</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,] 0.32 0.28 0.96 0.76 0.34</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,] 0.50 0.44 0.26 0.68 0.88</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6,] 0.28 0.74 0.58 0.84 0.32</span></span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(a<span class="sc">$</span>PPP_item_means)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.58 0.36 0.70 0.86 0.24 0.76</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.90 0.78 0.64 0.14 0.26 0.28</span></span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(a<span class="sc">$</span>PPP_item_ORs)</span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]   NA 0.82 0.28 0.56 0.60 0.86 0.82 0.86 0.60  0.06  0.32  0.66  0.18  0.62</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]   NA   NA 0.78 0.66 0.72 0.28 0.62 0.62 0.98  0.16  0.14  0.82  0.24  0.44</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,]   NA   NA   NA 0.02 0.38 0.20 0.54 0.82 0.98  0.00  0.52  0.16  0.56  0.42</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,]   NA   NA   NA   NA 0.80 0.52 0.80 0.02 0.98  0.88  0.14  0.68  0.90  0.72</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,]   NA   NA   NA   NA   NA 0.24 0.16 0.10 0.98  0.00  0.18  0.92  0.18  0.12</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6,]   NA   NA   NA   NA   NA   NA 0.14 0.56 0.54  0.90  0.66  0.80  0.48  0.66</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]   NA 0.14 0.04 0.60 0.54 0.72 0.74 0.36 0.90  0.50  0.12  0.22  0.00  0.94</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]   NA   NA 0.52 0.28 0.24 0.44 0.88 0.88 0.32  0.96  0.92  0.66  0.72  0.90</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,]   NA   NA   NA 0.50 0.28 0.72 1.00 0.70 0.66  0.06  0.94  0.86  0.36  0.18</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,]   NA   NA   NA   NA 0.06 0.88 0.66 0.70 0.68  0.72  0.44  0.54  0.48  0.20</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,]   NA   NA   NA   NA   NA 0.28 0.76 0.00 0.22  0.12  0.46  0.48  0.16  0.94</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6,]   NA   NA   NA   NA   NA   NA 0.20 0.38 0.94  0.26  0.96  0.74  0.38  0.40</span></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25] [,26]</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  0.10  0.04  0.16  0.22  0.68  0.40  0.80  0.38  0.34  0.34  0.36  0.66</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]  0.90  0.48  0.96  0.48  0.52  0.84  0.84  0.58  0.52  0.24  0.90  0.86</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,]  0.18  0.76  0.80  0.48  0.92  0.38  0.46  0.30  0.78  0.70  0.12  0.24</span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,]  0.82  0.92  0.38  0.84  0.98  0.40  0.22  0.26  0.98  0.40  0.28  0.74</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,]  0.42  0.08  0.68  0.62  0.56  0.26  0.88  0.94  0.86  0.96  0.96  0.50</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6,]  0.22  0.78  0.40  0.54  0.86  0.78  0.98  0.18  0.82  0.40  0.12  0.94</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  0.84  0.18  0.36  0.32  0.32  0.48  0.56  0.64  0.74  0.12  0.64  0.54</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]  0.54  0.64  1.00  0.48  0.14  0.80  0.60  0.18  0.76  0.78  0.58  0.10</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,]  0.78  0.82  0.24  0.76  0.22  0.76  0.38  0.42  0.76  0.34  0.50  0.58</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,]  0.56  0.50  0.14  0.82  0.68  0.76  0.30  0.76  0.62  0.86  0.56  0.28</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,]  0.82  0.82  0.56  0.94  0.32  0.84  0.72  0.04  0.66  0.26  0.62  0.74</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6,]  0.26  0.12  0.62  0.38  0.88  0.54  0.04  0.40  0.78  0.42  0.56  0.48</span></span>
 <span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,27] [,28] [,29] [,30] [,31] [,32] [,33] [,34] [,35] [,36] [,37] [,38]</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  0.30  0.90  0.30  0.06  0.34  0.34  0.18  0.08  0.68  0.74  0.02  0.42</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]  0.80  0.40  0.38  0.06  0.12  0.62  0.30  0.84  0.64  0.78  0.34  0.34</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,]  0.32  0.06  0.90  0.76  0.34  0.44  0.28  0.72  0.52  0.56  0.32  0.88</span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,]  0.18  0.68  0.98  0.02  0.22  0.68  0.66  0.50  0.44  0.32  0.84  0.52</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,]  0.46  0.98  0.00  0.56  0.36  0.54  0.68  0.48  0.66  0.64  0.60  0.20</span></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6,]  0.32  0.00  0.50  0.42  0.22  0.74  0.62  0.88  0.00  0.08  0.22  0.84</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  0.00  0.14  0.86  0.66  0.84  0.32  0.64  0.44  0.88  0.20  0.84  0.52</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]  0.74  0.32  0.50  0.86  0.30  0.20  0.22  0.90  0.40  0.02  0.52  0.90</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,]  0.68  0.28  0.02  0.04  0.92  0.84  0.42  0.82  0.36  0.60  0.84  0.30</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,]  0.74  0.84  0.16  0.02  0.88  0.34  0.88  0.62  0.32  0.46  0.88  0.44</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,]  0.32  0.28  0.74  0.44  0.90  0.70  0.38  0.08  0.52  0.22  0.38  0.96</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6,]  0.02  0.70  0.04  0.08  0.36  0.96  0.60  0.02  0.44  0.66  0.30  0.60</span></span>
 <span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,39] [,40] [,41] [,42] [,43] [,44] [,45] [,46] [,47] [,48] [,49] [,50]</span></span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  0.02  0.74  0.60  0.52  0.30  0.88  0.90  0.56  0.94  0.58  0.86  0.44</span></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]  0.12  0.76  0.50  0.58  0.52  0.98  0.12  0.90  0.40  0.64  0.78  0.56</span></span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,]  0.42  0.72  1.00  0.68  0.66  0.26  1.00  0.76  0.70  0.34  0.12  0.70</span></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,]  0.80  0.56  0.38  0.34  0.60  0.72  0.16  0.76  0.64  0.30  0.94  0.94</span></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,]  0.04  0.88  0.66  0.54  0.68  0.74  0.90  0.64  0.80  0.70  0.58  0.80</span></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6,]  0.54  0.24  0.62  0.10  0.40  0.18  0.72  0.44  0.06  0.22  0.06  0.82</span></span></code></pre></div>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  0.64  0.02  0.12  0.40  0.78  0.16  0.14  0.62  0.40  0.94  0.00  0.44</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]  0.12  0.60  0.90  0.22  0.12  0.66  1.00  0.34  0.06  0.64  1.00  0.78</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,]  0.26  0.90  0.70  0.64  0.18  0.62  0.06  0.26  0.54  0.32  0.76  0.36</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,]  0.70  0.56  0.18  0.62  0.58  0.42  0.22  0.00  0.64  1.00  0.18  0.48</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,]  0.38  0.36  0.28  0.54  0.76  0.52  0.76  0.50  0.46  0.30  0.36  0.80</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6,]  0.20  0.04  0.42  0.88  0.04  0.22  0.96  0.30  0.70  0.14  0.24  0.40</span></span></code></pre></div>
 </div>
 
 
