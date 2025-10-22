@@ -48,6 +48,7 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -340,177 +341,184 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(hmcdm)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(hmcdm)</span></code></pre></div>
 <div id="load-the-spatial-rotation-data" class="section level3">
 <h3>Load the spatial rotation data</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="fu">dim</span>(Design_array)[<span class="dv">1</span>]</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>J <span class="ot">=</span> <span class="fu">nrow</span>(Q_matrix)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>K <span class="ot">=</span> <span class="fu">ncol</span>(Q_matrix)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>L <span class="ot">=</span> <span class="fu">dim</span>(Design_array)[<span class="dv">3</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>N <span class="ot">=</span> <span class="fu">dim</span>(Design_array)[<span class="dv">1</span>]</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>J <span class="ot">=</span> <span class="fu">nrow</span>(Q_matrix)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>K <span class="ot">=</span> <span class="fu">ncol</span>(Q_matrix)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>L <span class="ot">=</span> <span class="fu">dim</span>(Design_array)[<span class="dv">3</span>]</span></code></pre></div>
 </div>
 <div id="simulate-responses-and-response-times-based-on-the-rrum-model" class="section level2">
 <h2>(1) Simulate responses and response times based on the rRUM
 model</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tau <span class="ot">&lt;-</span> <span class="fu">numeric</span>(K)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  tau[k] <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>,.<span class="dv">2</span>,.<span class="dv">6</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>R <span class="ot">=</span> <span class="fu">matrix</span>(<span class="dv">0</span>,K,K)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial alphas</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>p_mastery <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">5</span>,.<span class="dv">5</span>,.<span class="dv">4</span>,.<span class="dv">4</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>Alphas_0 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>,N,K)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N){</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    prereqs <span class="ot">&lt;-</span> <span class="fu">which</span>(R[k,]<span class="sc">==</span><span class="dv">1</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(prereqs)<span class="sc">==</span><span class="dv">0</span>){</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>      Alphas_0[i,k] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>,<span class="dv">1</span>,p_mastery[k])</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(prereqs)<span class="sc">&gt;</span><span class="dv">0</span>){</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>      Alphas_0[i,k] <span class="ot">&lt;-</span> <span class="fu">prod</span>(Alphas_0[i,prereqs])<span class="sc">*</span><span class="fu">rbinom</span>(<span class="dv">1</span>,<span class="dv">1</span>,p_mastery)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>Alphas <span class="ot">&lt;-</span> <span class="fu">sim_alphas</span>(<span class="at">model=</span><span class="st">&quot;indept&quot;</span>,<span class="at">taus=</span>tau,<span class="at">N=</span>N,<span class="at">L=</span>L,<span class="at">R=</span>R,<span class="at">alpha0=</span>Alphas_0)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">rowSums</span>(Alphas[,,<span class="dv">5</span>]) <span class="sc">-</span> <span class="fu">rowSums</span>(Alphas[,,<span class="dv">1</span>])) <span class="co"># used to see how much transition has taken place</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   0   1   2   3   4 </span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  22  95 125  81  27</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>Smats <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(J<span class="sc">*</span>K,.<span class="dv">1</span>,.<span class="dv">3</span>),<span class="fu">c</span>(J,K))</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>Gmats <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(J<span class="sc">*</span>K,.<span class="dv">1</span>,.<span class="dv">3</span>),<span class="fu">c</span>(J,K))</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate rRUM parameters</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>r_stars <span class="ot">&lt;-</span> Gmats <span class="sc">/</span> (<span class="dv">1</span><span class="sc">-</span>Smats)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>pi_stars <span class="ot">&lt;-</span> <span class="fu">apply</span>((<span class="dv">1</span><span class="sc">-</span>Smats)<span class="sc">^</span>Q_matrix, <span class="dv">1</span>, prod)</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>Y_sim <span class="ot">&lt;-</span> <span class="fu">sim_hmcdm</span>(<span class="at">model=</span><span class="st">&quot;rRUM&quot;</span>,Alphas,Q_matrix,Design_array,</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>                   <span class="at">r_stars=</span>r_stars,<span class="at">pi_stars=</span>pi_stars)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>tau <span class="ot">&lt;-</span> <span class="fu">numeric</span>(K)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  tau[k] <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>,.<span class="dv">2</span>,.<span class="dv">6</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>}</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>R <span class="ot">=</span> <span class="fu">matrix</span>(<span class="dv">0</span>,K,K)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co"># Initial alphas</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>p_mastery <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">5</span>,.<span class="dv">5</span>,.<span class="dv">4</span>,.<span class="dv">4</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>Alphas_0 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>,N,K)</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N){</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  <span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>    prereqs <span class="ot">&lt;-</span> <span class="fu">which</span>(R[k,]<span class="sc">==</span><span class="dv">1</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(prereqs)<span class="sc">==</span><span class="dv">0</span>){</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>      Alphas_0[i,k] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>,<span class="dv">1</span>,p_mastery[k])</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>    }</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(prereqs)<span class="sc">&gt;</span><span class="dv">0</span>){</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>      Alphas_0[i,k] <span class="ot">&lt;-</span> <span class="fu">prod</span>(Alphas_0[i,prereqs])<span class="sc">*</span><span class="fu">rbinom</span>(<span class="dv">1</span>,<span class="dv">1</span>,p_mastery)</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>    }</span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>  }</span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>}</span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>Alphas <span class="ot">&lt;-</span> <span class="fu">sim_alphas</span>(<span class="at">model=</span><span class="st">&quot;indept&quot;</span>,<span class="at">taus=</span>tau,<span class="at">N=</span>N,<span class="at">L=</span>L,<span class="at">R=</span>R,<span class="at">alpha0=</span>Alphas_0)</span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">rowSums</span>(Alphas[,,<span class="dv">5</span>]) <span class="sc">-</span> <span class="fu">rowSums</span>(Alphas[,,<span class="dv">1</span>])) <span class="co"># used to see how much transition has taken place</span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co">#&gt;   0   1   2   3   4 </span></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt;  33  89 139  79  10</span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a>Smats <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(J<span class="sc">*</span>K,.<span class="dv">1</span>,.<span class="dv">3</span>),<span class="fu">c</span>(J,K))</span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a>Gmats <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(J<span class="sc">*</span>K,.<span class="dv">1</span>,.<span class="dv">3</span>),<span class="fu">c</span>(J,K))</span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co"># Simulate rRUM parameters</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>r_stars <span class="ot">&lt;-</span> Gmats <span class="sc">/</span> (<span class="dv">1</span><span class="sc">-</span>Smats)</span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>pi_stars <span class="ot">&lt;-</span> <span class="fu">apply</span>((<span class="dv">1</span><span class="sc">-</span>Smats)<span class="sc">^</span>Q_matrix, <span class="dv">1</span>, prod)</span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a>Y_sim <span class="ot">&lt;-</span> <span class="fu">sim_hmcdm</span>(<span class="at">model=</span><span class="st">&quot;rRUM&quot;</span>,Alphas,Q_matrix,Design_array,</span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a>                   <span class="at">r_stars=</span>r_stars,<span class="at">pi_stars=</span>pi_stars)</span></code></pre></div>
 </div>
 <div id="run-the-mcmc-to-sample-parameters-from-the-posterior-distribution" class="section level2">
 <h2>(2) Run the MCMC to sample parameters from the posterior
 distribution</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>output_rRUM_indept <span class="ot">=</span> <span class="fu">hmcdm</span>(Y_sim,Q_matrix,<span class="st">&quot;rRUM_indept&quot;</span>,Design_array,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                           <span class="dv">100</span>,<span class="dv">30</span>,<span class="at">R =</span> R)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>output_rRUM_indept</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Model: rRUM_indept </span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sample Size: 350</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of Items: </span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of Time Points: </span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chain Length: 100, burn-in: 50</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(output_rRUM_indept)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Model: rRUM_indept </span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Item Parameters:</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  r_stars1_EAP r_stars2_EAP r_stars3_EAP r_stars4_EAP pi_stars_EAP</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        0.1993      0.51490       0.6957       0.6744       0.8504</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        0.5519      0.43958       0.5587       0.6092       0.7719</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        0.6596      0.51894       0.6409       0.3554       0.7504</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        0.6738      0.68623       0.1715       0.6188       0.8434</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        0.3924      0.09994       0.5141       0.6946       0.8155</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    ... 45 more items</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Transition Parameters:</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    taus_EAP</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; τ1   0.3851</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; τ2   0.6149</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; τ3   0.5582</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; τ4   0.3437</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Class Probabilities:</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      pis_EAP</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0000 0.11906</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0001 0.03655</span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0010 0.09150</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0011 0.05177</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0100 0.07980</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    ... 11 more classes</span></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Deviance Information Criterion (DIC): 22933.92 </span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Posterior Predictive P-value (PPP):</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1: 0.5064</span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2:  0.49</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total scores:  0.6145</span></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">summary</span>(output_rRUM_indept)</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(a<span class="sc">$</span>r_stars_EAP)</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           [,1]       [,2]      [,3]      [,4]</span></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,] 0.1993376 0.51490431 0.6956522 0.6743655</span></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,] 0.5519450 0.43958144 0.5586875 0.6092017</span></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] 0.6595621 0.51893944 0.6409174 0.3554333</span></span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,] 0.6738479 0.68622934 0.1714936 0.6188168</span></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,] 0.3923977 0.09993945 0.5140721 0.6946310</span></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6,] 0.6193002 0.24105679 0.3053849 0.5611629</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>output_rRUM_indept <span class="ot">=</span> <span class="fu">hmcdm</span>(Y_sim,Q_matrix,<span class="st">&quot;rRUM_indept&quot;</span>,Design_array,</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>                           <span class="dv">100</span>,<span class="dv">30</span>,<span class="at">R =</span> R)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; 0</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>output_rRUM_indept</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; Model: rRUM_indept </span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; Sample Size: 350</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; Number of Items: </span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; Number of Time Points: </span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; Chain Length: 100, burn-in: 50</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="fu">summary</span>(output_rRUM_indept)</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; Model: rRUM_indept </span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt; Item Parameters:</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt;  r_stars1_EAP r_stars2_EAP r_stars3_EAP r_stars4_EAP pi_stars_EAP</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt;        0.2781       0.6792       0.6201       0.6436       0.8204</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt;        0.5422       0.1011       0.6665       0.6236       0.8176</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">#&gt;        0.6219       0.6512       0.5843       0.2000       0.8191</span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="co">#&gt;        0.6711       0.5022       0.1893       0.5535       0.7830</span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">#&gt;        0.1142       0.2764       0.5600       0.6678       0.6988</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt;    ... 45 more items</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co">#&gt; Transition Parameters:</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="co">#&gt;    taus_EAP</span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="co">#&gt; τ1   0.6025</span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="co">#&gt; τ2   0.2616</span></span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a><span class="co">#&gt; τ3   0.3540</span></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a><span class="co">#&gt; τ4   0.4458</span></span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a><span class="co">#&gt; Class Probabilities:</span></span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a><span class="co">#&gt;      pis_EAP</span></span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="co">#&gt; 0000 0.07538</span></span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a><span class="co">#&gt; 0001 0.10249</span></span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a><span class="co">#&gt; 0010 0.04019</span></span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a><span class="co">#&gt; 0011 0.05713</span></span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a><span class="co">#&gt; 0100 0.13001</span></span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a><span class="co">#&gt;    ... 11 more classes</span></span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a><span class="co">#&gt; Deviance Information Criterion (DIC): 22366.34 </span></span>
+<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a><span class="co">#&gt; Posterior Predictive P-value (PPP):</span></span>
+<span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a><span class="co">#&gt; M1: 0.494</span></span>
+<span id="cb4-46"><a href="#cb4-46" tabindex="-1"></a><span class="co">#&gt; M2:  0.49</span></span>
+<span id="cb4-47"><a href="#cb4-47" tabindex="-1"></a><span class="co">#&gt; total scores:  0.6145</span></span>
+<span id="cb4-48"><a href="#cb4-48" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">summary</span>(output_rRUM_indept)</span>
+<span id="cb4-49"><a href="#cb4-49" tabindex="-1"></a><span class="fu">head</span>(a<span class="sc">$</span>r_stars_EAP)</span>
+<span id="cb4-50"><a href="#cb4-50" tabindex="-1"></a><span class="co">#&gt;           [,1]      [,2]      [,3]      [,4]</span></span>
+<span id="cb4-51"><a href="#cb4-51" tabindex="-1"></a><span class="co">#&gt; [1,] 0.2781204 0.6791891 0.6201037 0.6435526</span></span>
+<span id="cb4-52"><a href="#cb4-52" tabindex="-1"></a><span class="co">#&gt; [2,] 0.5421509 0.1010740 0.6664536 0.6235942</span></span>
+<span id="cb4-53"><a href="#cb4-53" tabindex="-1"></a><span class="co">#&gt; [3,] 0.6218539 0.6512051 0.5842794 0.2000476</span></span>
+<span id="cb4-54"><a href="#cb4-54" tabindex="-1"></a><span class="co">#&gt; [4,] 0.6710642 0.5021942 0.1893288 0.5534743</span></span>
+<span id="cb4-55"><a href="#cb4-55" tabindex="-1"></a><span class="co">#&gt; [5,] 0.1141753 0.2763554 0.5600443 0.6678219</span></span>
+<span id="cb4-56"><a href="#cb4-56" tabindex="-1"></a><span class="co">#&gt; [6,] 0.5029857 0.3006291 0.2997223 0.5265600</span></span></code></pre></div>
 </div>
 <div id="check-for-parameter-estimation-accuracy" class="section level2">
 <h2>(3) Check for parameter estimation accuracy</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(cor_pistars <span class="ot">&lt;-</span> <span class="fu">cor</span>(<span class="fu">as.vector</span>(pi_stars),<span class="fu">as.vector</span>(a<span class="sc">$</span>pi_stars_EAP)))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.9637738</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>(cor_rstars <span class="ot">&lt;-</span> <span class="fu">cor</span>(<span class="fu">as.vector</span>(r_stars<span class="sc">*</span>Q_matrix),<span class="fu">as.vector</span>(a<span class="sc">$</span>r_stars_EAP<span class="sc">*</span>Q_matrix)))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.9231634</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>AAR_vec <span class="ot">&lt;-</span> <span class="fu">numeric</span>(L)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>L){</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  AAR_vec[t] <span class="ot">&lt;-</span> <span class="fu">mean</span>(Alphas[,,t]<span class="sc">==</span>a<span class="sc">$</span>Alphas_est[,,t])</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>AAR_vec</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.8578571 0.8857143 0.9307143 0.9671429 0.9714286</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>PAR_vec <span class="ot">&lt;-</span> <span class="fu">numeric</span>(L)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>L){</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  PAR_vec[t] <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">rowSums</span>((Alphas[,,t]<span class="sc">-</span>a<span class="sc">$</span>Alphas_est[,,t])<span class="sc">^</span><span class="dv">2</span>)<span class="sc">==</span><span class="dv">0</span>)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>PAR_vec</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.5285714 0.6314286 0.7628571 0.8800000 0.8942857</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>(cor_pistars <span class="ot">&lt;-</span> <span class="fu">cor</span>(<span class="fu">as.vector</span>(pi_stars),<span class="fu">as.vector</span>(a<span class="sc">$</span>pi_stars_EAP)))</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.963348</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>(cor_rstars <span class="ot">&lt;-</span> <span class="fu">cor</span>(<span class="fu">as.vector</span>(r_stars<span class="sc">*</span>Q_matrix),<span class="fu">as.vector</span>(a<span class="sc">$</span>r_stars_EAP<span class="sc">*</span>Q_matrix)))</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; [1] 0.9309798</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>AAR_vec <span class="ot">&lt;-</span> <span class="fu">numeric</span>(L)</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>L){</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>  AAR_vec[t] <span class="ot">&lt;-</span> <span class="fu">mean</span>(Alphas[,,t]<span class="sc">==</span>a<span class="sc">$</span>Alphas_est[,,t])</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>}</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>AAR_vec</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; [1] 0.8457143 0.9042857 0.9285714 0.9521429 0.9664286</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>PAR_vec <span class="ot">&lt;-</span> <span class="fu">numeric</span>(L)</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>L){</span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>  PAR_vec[t] <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">rowSums</span>((Alphas[,,t]<span class="sc">-</span>a<span class="sc">$</span>Alphas_est[,,t])<span class="sc">^</span><span class="dv">2</span>)<span class="sc">==</span><span class="dv">0</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>}</span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>PAR_vec</span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt; [1] 0.5200000 0.6857143 0.7600000 0.8400000 0.8828571</span></span></code></pre></div>
 </div>
 <div id="evaluate-the-fit-of-the-model-to-the-observed-response" class="section level2">
 <h2>(4) Evaluate the fit of the model to the observed response</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span>DIC</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              Transition Response_Time Response    Joint    Total</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D_bar          2064.491            NA 18249.38 1861.215 22175.09</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D(theta_bar)   1981.126            NA 17570.21 1864.915 21416.26</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; DIC            2147.855            NA 18928.55 1857.516 22933.92</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(a<span class="sc">$</span>PPP_total_scores)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5]</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,] 0.02 0.38 0.12 0.82 0.62</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,] 0.70 0.82 0.54 0.44 0.92</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] 0.78 0.26 0.68 0.54 0.96</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,] 0.82 0.66 0.92 0.82 0.10</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,] 0.78 0.58 0.92 0.02 0.80</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6,] 0.70 0.82 1.00 0.94 0.32</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(a<span class="sc">$</span>PPP_item_means)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.44 0.52 0.50 0.58 0.40 0.50</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(a<span class="sc">$</span>PPP_item_ORs)</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]   NA 0.58 0.72 0.90 0.80 0.88 0.70 0.76 0.52  0.50  0.30  0.40  0.08  0.32</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]   NA   NA 0.16 0.12 0.82 0.34 0.46 0.96 0.40  0.54  0.64  0.88  0.12  0.76</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,]   NA   NA   NA 0.94 0.82 0.92 0.86 0.82 0.80  0.82  0.22  0.42  0.24  0.74</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,]   NA   NA   NA   NA 0.64 0.96 0.76 0.82 0.40  0.74  0.10  0.86  0.22  0.52</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,]   NA   NA   NA   NA   NA 0.56 0.80 0.80 0.70  0.64  0.78  0.86  0.10  0.60</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6,]   NA   NA   NA   NA   NA   NA 0.76 1.00 0.86  0.40  0.02  0.22  0.22  0.28</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25] [,26]</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  0.40  0.78  0.38  0.08  0.90  0.64  0.46  0.70  0.14  0.44  0.32  0.64</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]  0.30  0.70  0.22  0.18  0.14  0.56  0.70  0.28  0.56  0.44  0.64  0.42</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,]  0.10  0.54  0.52  0.40  0.36  0.76  0.38  0.72  0.10  0.04  0.34  0.22</span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,]  0.88  0.96  0.82  0.08  0.84  0.50  0.48  0.58  0.58  0.22  0.06  0.54</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,]  0.64  0.10  0.88  0.08  0.50  0.88  0.82  0.88  0.12  0.74  0.54  0.86</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6,]  0.92  0.32  0.86  0.06  0.34  0.42  0.58  0.88  0.68  0.04  0.58  0.28</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,27] [,28] [,29] [,30] [,31] [,32] [,33] [,34] [,35] [,36] [,37] [,38]</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  0.96  0.86  0.68  0.62  0.44  0.94  0.56  0.78  0.30  0.04  0.56  0.80</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]  0.16  0.68  0.50  0.50  0.66  0.40  0.44  0.42  0.78  0.98  0.68  0.62</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,]  0.74  0.70  0.40  0.24  0.18  0.18  0.66  0.74  0.50  0.56  0.32  0.28</span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,]  0.40  0.08  0.36  0.46  0.14  0.62  0.20  0.88  0.14  0.50  0.06  0.32</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,]  0.50  0.84  0.88  0.36  0.34  0.92  0.20  0.84  0.92  0.26  0.24  0.78</span></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6,]  0.70  0.32  0.02  0.88  0.00  0.60  0.04  0.40  0.46  0.18  0.36  0.38</span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,39] [,40] [,41] [,42] [,43] [,44] [,45] [,46] [,47] [,48] [,49] [,50]</span></span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  0.72  0.26  1.00  1.00  0.26  0.70  1.00  0.28  0.68  0.86  0.96  0.92</span></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]  0.12  0.86  0.74  0.58  0.50  0.34  0.84  0.96  0.44  0.94  0.30  0.88</span></span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,]  0.46  0.10  0.66  0.30  0.04  0.34  0.50  0.42  0.66  0.04  1.00  0.14</span></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,]  0.62  0.06  0.62  0.88  0.46  0.98  0.60  0.58  0.56  0.86  0.12  0.64</span></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5,]  0.58  0.80  0.74  0.86  0.38  0.50  0.60  0.78  0.30  0.58  0.80  0.88</span></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6,]  0.06  0.72  0.50  0.90  0.14  0.30  0.16  0.66  0.48  0.64  0.32  0.10</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>a<span class="sc">$</span>DIC</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt;              Transition Response_Time Response    Joint    Total</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; D_bar          2103.685            NA 17736.25 1876.355 21716.29</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; D(theta_bar)   2032.666            NA 17178.03 1855.554 21066.25</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; DIC            2174.703            NA 18294.48 1897.156 22366.34</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="fu">head</span>(a<span class="sc">$</span>PPP_total_scores)</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5]</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; [1,] 1.00 0.84 0.02 0.14 0.16</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; [2,] 0.46 0.74 0.74 0.40 1.00</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; [3,] 0.40 0.48 0.96 0.84 0.78</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; [4,] 0.90 0.90 0.60 0.90 0.98</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt; [5,] 0.58 0.34 0.86 0.46 0.68</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; [6,] 0.90 0.58 0.78 0.38 0.78</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="fu">head</span>(a<span class="sc">$</span>PPP_item_means)</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; [1] 0.38 0.56 0.56 0.54 0.60 0.66</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="fu">head</span>(a<span class="sc">$</span>PPP_item_ORs)</span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co">#&gt; [1,]   NA 0.62 0.72 0.26 0.52 0.70 0.84 0.58 0.14  0.62  0.66  0.84  0.68  0.10</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt; [2,]   NA   NA 0.66 0.76 0.98 0.56 0.76 0.08 0.38  0.82  0.18  0.76  0.20  0.78</span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt; [3,]   NA   NA   NA 1.00 0.48 0.98 0.50 0.92 0.64  0.86  0.88  0.76  0.70  0.78</span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co">#&gt; [4,]   NA   NA   NA   NA 0.26 0.46 0.56 0.62 0.50  0.26  0.38  0.84  0.22  0.02</span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a><span class="co">#&gt; [5,]   NA   NA   NA   NA   NA 0.40 0.94 0.32 0.00  0.98  0.16  0.68  0.20  0.14</span></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="co">#&gt; [6,]   NA   NA   NA   NA   NA   NA 0.52 0.92 0.50  0.62  0.84  0.74  0.66  0.38</span></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a><span class="co">#&gt;      [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25] [,26]</span></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a><span class="co">#&gt; [1,]  0.22  0.54  0.14  0.32  0.32  0.28  0.52  0.16  0.86  0.64  0.80  0.20</span></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a><span class="co">#&gt; [2,]  0.70  0.98  0.92  0.70  0.60  0.56  0.42  0.26  0.28  0.94  0.46  0.44</span></span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a><span class="co">#&gt; [3,]  0.92  0.98  0.32  0.76  0.82  0.94  0.28  0.50  0.70  0.94  0.28  0.82</span></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a><span class="co">#&gt; [4,]  0.38  0.30  0.26  0.18  0.60  0.88  0.98  0.66  0.30  0.62  0.72  0.50</span></span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="co">#&gt; [5,]  0.10  0.18  0.40  0.52  0.12  0.16  0.74  0.38  0.46  0.80  0.54  0.38</span></span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a><span class="co">#&gt; [6,]  0.10  0.10  0.92  0.34  0.54  0.82  0.92  0.70  0.32  0.64  0.60  0.46</span></span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a><span class="co">#&gt;      [,27] [,28] [,29] [,30] [,31] [,32] [,33] [,34] [,35]     [,36] [,37]</span></span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a><span class="co">#&gt; [1,]  0.00  0.14  0.02  0.14  0.54  0.20  0.62  0.36  0.46 0.2448980  0.72</span></span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a><span class="co">#&gt; [2,]  0.62  0.26  0.22  0.78  0.10  0.62  0.90  0.12  0.40 0.9387755  0.28</span></span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a><span class="co">#&gt; [3,]  0.66  0.08  0.76  0.70  0.62  1.00  0.68  0.32  0.84 1.0000000  0.80</span></span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a><span class="co">#&gt; [4,]  0.88  0.12  0.98  0.24  0.86  0.44  0.24  0.00  0.62 0.5102041  1.00</span></span>
+<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a><span class="co">#&gt; [5,]  0.54  0.78  0.62  0.60  0.34  0.82  0.36  0.02  0.36 0.5714286  0.80</span></span>
+<span id="cb6-37"><a href="#cb6-37" tabindex="-1"></a><span class="co">#&gt; [6,]  0.22  0.82  0.28  0.68  0.56  0.80  0.36  0.26  0.78 0.4081633  0.82</span></span>
+<span id="cb6-38"><a href="#cb6-38" tabindex="-1"></a><span class="co">#&gt;      [,38] [,39] [,40] [,41] [,42] [,43] [,44] [,45] [,46] [,47] [,48] [,49]</span></span>
+<span id="cb6-39"><a href="#cb6-39" tabindex="-1"></a><span class="co">#&gt; [1,]  0.48  0.78  0.50  0.94  0.42  0.70  0.72  0.72  0.34  0.28  0.46  0.02</span></span>
+<span id="cb6-40"><a href="#cb6-40" tabindex="-1"></a><span class="co">#&gt; [2,]  0.80  0.08  0.46  0.50  0.74  0.10  0.14  0.16  0.64  0.74  0.94  0.52</span></span>
+<span id="cb6-41"><a href="#cb6-41" tabindex="-1"></a><span class="co">#&gt; [3,]  0.90  0.56  0.88  0.42  0.96  0.28  0.76  0.36  0.86  0.34  0.10  0.50</span></span>
+<span id="cb6-42"><a href="#cb6-42" tabindex="-1"></a><span class="co">#&gt; [4,]  0.48  0.68  0.98  0.86  0.32  0.74  0.60  0.98  0.82  0.56  0.36  0.62</span></span>
+<span id="cb6-43"><a href="#cb6-43" tabindex="-1"></a><span class="co">#&gt; [5,]  0.44  0.44  0.96  0.34  0.42  0.36  0.16  0.58  0.56  0.14  0.84  0.86</span></span>
+<span id="cb6-44"><a href="#cb6-44" tabindex="-1"></a><span class="co">#&gt; [6,]  0.74  0.54  0.86  0.64  0.10  0.44  0.68  0.98  0.12  0.36  0.78  0.96</span></span>
+<span id="cb6-45"><a href="#cb6-45" tabindex="-1"></a><span class="co">#&gt;      [,50]</span></span>
+<span id="cb6-46"><a href="#cb6-46" tabindex="-1"></a><span class="co">#&gt; [1,]  0.84</span></span>
+<span id="cb6-47"><a href="#cb6-47" tabindex="-1"></a><span class="co">#&gt; [2,]  0.18</span></span>
+<span id="cb6-48"><a href="#cb6-48" tabindex="-1"></a><span class="co">#&gt; [3,]  0.46</span></span>
+<span id="cb6-49"><a href="#cb6-49" tabindex="-1"></a><span class="co">#&gt; [4,]  0.24</span></span>
+<span id="cb6-50"><a href="#cb6-50" tabindex="-1"></a><span class="co">#&gt; [5,]  0.54</span></span>
+<span id="cb6-51"><a href="#cb6-51" tabindex="-1"></a><span class="co">#&gt; [6,]  0.38</span></span></code></pre></div>
 </div>
 
 
